@@ -1,0 +1,27 @@
+extends ../layouts/main
+
+block content
+    .mt-4.ml-5.mr-5
+        div
+            h3 List Categories
+        table.table.mt-5
+            thead
+                tr
+                    th(scope='col') #
+                    th(scope='col') Name Category
+                    th(scope='col') Created Time
+                    th(scope='col') Action
+            tbody
+                - var index = 0;
+                each category in categories
+                    tr
+                        th(scope='row') #{++index}
+                        td #{category.name}
+                        td #{category.createdAt}
+                        td
+                            a.btn.btn-link(href=`/ad/stored-categories/${category._id}`) Update
+                            a.btn.btn-link(href=`/ad/stored-categories/${category._id}/delete`) Delete
+                else
+                    tr
+                        td.text-center(colspan='5')
+                            | Empty category list!

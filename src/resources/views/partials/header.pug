@@ -1,0 +1,47 @@
+nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
+    div(class="container-fluid")
+        a(class="navbar-brand", href="/")
+            img(src="/img/logo.png" alt="Pet Shop Logo" style="height: 30px;" class="rounded")
+            | &nbsp; Pet Shop
+        button(class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+            span(class="navbar-toggler-icon")
+        div(class="collapse navbar-collapse" id="navbarSupportedContent")
+            ul(class="navbar-nav ml-auto mb-2 mb-lg-0")
+                if user && user.role == 'admin'
+                    div(class="dropdown ml-4 mr-4")
+                        button(class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Manage orders
+                        div(class="dropdown-menu" aria-labelledby="dropdownMenu2")
+                            button(class="dropdown-item" type="button")
+                                a(class="" href="/ad/stored-orders") List orders
+
+                    div(class="dropdown ml-4 mr-4")
+                        button(class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Manage products
+                        div(class="dropdown-menu" aria-labelledby="dropdownMenu2")
+                            button(class="dropdown-item" type="button")
+                                a(class="" href="/ad/stored-products/create") Add New Product
+                            button(class="dropdown-item" type="button")
+                                a(class="" href="/ad/stored-products") List Products
+
+                    div(class="dropdown ml-4 mr-4")
+                        button(class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Manage categories
+                        div(class="dropdown-menu" aria-labelledby="dropdownMenu2")
+                            button(class="dropdown-item" type="button")
+                                a(class="" href="/ad/stored-categories/create") Add New Category
+                            button(class="dropdown-item" type="button")
+                                a(class="" href="/ad/stored-categories") List Category
+                if user
+                    li(class="nav-item mr-4")
+                        a(class="nav-link", href="/order/history") My orders
+                    li(class="nav-item mr-4")
+                        a(class="nav-link", href="/cart") Cart
+                            if cart
+                                | (#{cart.totalQty})
+                            else
+                                | (0)
+                    li(class="nav-item mr-4")
+                        a(class="nav-link", href="/auth/logout", (click)="alert('Do you want to logout?')") Logout
+                else
+                    li(class="nav-item mr-4")
+                        a(class="nav-link", href="/auth/login") Login
+                    li(class="nav-item mr-4")
+                        a(class="nav-link", href="/auth/register") Register

@@ -1,0 +1,28 @@
+extends ../layouts/main
+
+block content
+    .mt-4.ml-5.mr-5
+        .row.justify-content-lg-center
+            ol#progress-bar(style='margin: auto;')
+                li.step-done CART
+                li.step-done CHECKOUT
+                li.step-active PAY
+        .row.justify-content-lg-center
+            .col-lg-6
+                form(method='POST' action='/order/pay')
+                    .form-group
+                        label(for='card_number') Card number
+                        input#card_number.form-control(name='card_number' value='' required='')
+                    .form-group
+                        label(for='name_on_card') Name on card
+                        input#name_on_card.form-control(name='name_on_card' value='' required='')
+                    .row
+                        .col-lg-6
+                            .form-group
+                                label(for='expiry_date') Expiry date
+                                input#expiry_date.form-control(name='expiry_date' value='' required='')
+                        .col-lg-6
+                            .form-group
+                                label(for='security_code') Security code
+                                input#security_code.form-control(type='password' name='security_code' value='')
+                    button.btn.btn-primary.btn-block(type='submit') PAY

@@ -1,0 +1,25 @@
+extends ../layouts/main
+
+block content
+    .mt-4.ml-5.mr-5
+        .row.justify-content-lg-center
+            ol#progress-bar(style='margin: auto;')
+                li.step-done CART
+                li.step-active CHECKOUT
+                li.step-todo PAY
+        .row.justify-content-lg-center
+            .col-lg-6
+                form(method='POST' action='/order/checkout')
+                    .form-group
+                        label(for='email') Email
+                        input#email.form-control(name='email' value=`${cart.checkout.email}` required='')
+                    .form-group
+                        label(for='phone') Phone
+                        input#phone.form-control(name='phone' value=`${cart.checkout.phone}` required='')
+                    .form-group
+                        label(for='shipping_address') Shipping address
+                        input#shipping_address.form-control(name='shipping_address' value=`${cart.checkout.shipping_address}` required='')
+                    .form-group
+                        label(for='note') Note
+                        input#note.form-control(name='note' value=`${cart.checkout.note}`)
+                    button.btn.btn-primary.btn-block(type='submit') CONTINUE

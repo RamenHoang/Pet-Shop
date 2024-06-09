@@ -1,0 +1,28 @@
+extends ../layouts/main
+
+block content
+    .mt-4
+        h3 EDIT PRODUCT
+        form(method='POST' action=`/ad/stored-products/${product._id}/update`)
+            .form-group
+                label(for='name') Product&apos;s Name
+                input#name.form-control(value=`${product.name}` name='name')
+            .form-group
+                label(for='price') Product&apos;s Price
+                input#price.form-control(value=`${product.price}` name='price')
+            .form-group
+                label(for='category') Product&apos;s Category
+                select#category.form-control(name='category' required='')
+                    each category in categories
+                        - var selected = product.category == category.name
+                        option(value=`${category.name}` selected=selected) #{category.name}
+            .form-group
+                label(for='quantity') Product&apos;s Quantity
+                input#quantity.form-control(value=`${product.quantity}` name='quantity')
+            .form-group
+                label(for='des') Product&apos;s Description
+                textarea#des.form-control(name='des') #{product.des}
+            .form-group
+                label(for='thumbnail') Product&apos;s Thumbnail
+                input#thumbnail.form-control(value=`${product.thumbnail}` name='thumbnail')
+            button.btn.btn-primary(type='submit') SAVE UPDATE

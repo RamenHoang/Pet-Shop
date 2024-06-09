@@ -1,0 +1,35 @@
+extends ../layouts/main
+
+block content
+    .mt-4.ml-5.mr-5
+        .row
+            h3 Order ID: ##{order._id}
+            .col-lg-12
+                .card-body.card-product.border
+                    p.card-text Email: #{order.email}
+                    p.card-text Phone: #{order.phone}
+                    p.card-text Shipping address: #{order.shippingAddress}
+                    p.card-text Note: #{order.note}
+                    p.card-text Total price: #{formatCurrency(order.total)}
+            .col-lg-12
+                .card-body.card-product.border
+                    table.table.mt-5
+                        thead
+                            tr
+                                th(scope='col') #
+                                th(scope='col') Thumbnail
+                                th(scope='col') Item
+                                th(scope='col') Price
+                                th(scope='col') Quantity
+                        tbody
+                            - var index = 0;
+                            each item in order.items
+                                tr
+                                    th(scope='row') #{++index}
+                                    td
+                                        a.btn.btn-link(href=`/product/${item.slug}`)
+                                            img.product-thumbnail(src=`${item.thumbnail}`)
+                                    td
+                                        a.btn.btn-link(href=`/product/${item.slug}`) #{item.name}
+                                    td #{formatCurrency(item.price)}
+                                    td #{item.quantity}

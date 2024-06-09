@@ -1,0 +1,10 @@
+extends ../layouts/main
+
+block content
+    .mt-4
+        h3 NEW CATEGORY
+        form(method='POST' action='/ad/store-categories/store')
+            .form-group
+                label(for='name') Category&apos;s Name
+                input#name.form-control(name='name')
+            button.btn.btn-primary(type='submit') ADD NEW CATEGORY

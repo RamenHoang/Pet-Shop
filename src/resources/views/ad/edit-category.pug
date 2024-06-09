@@ -1,0 +1,10 @@
+extends ../layouts/main
+
+block content
+    .mt-4
+        h3 EDIT CATEGORY
+        form(method='POST' action=`/ad/stored-categories/${category._id}/update`)
+            .form-group
+                label(for='name') Product&apos;s Name
+                input#name.form-control(value=`${category.name}` name='name')
+            button.btn.btn-primary(type='submit') SAVE UPDATE

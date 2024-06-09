@@ -4,6 +4,9 @@ module.exports = {
     home: async (req, res, next) => {
         try {
             const products = await Product.find({}).lean();
+            products.map(product => {
+                return product;
+            });
 
             const success = req.flash('success') ?? null;
             const error = req.flash('error') ?? null;

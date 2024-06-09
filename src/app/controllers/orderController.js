@@ -165,7 +165,7 @@ module.exports = {
             return res.redirect(`/order/${order._id}`);
         } catch (error) {
             req.flash('error', error.message);
-            return res.redirect('/');
+            return res.redirect('/order/pay');
         }
     },
     getOrderDetail: async (req, res) => {
@@ -175,6 +175,7 @@ module.exports = {
             const cart = req.session.cart;
             const user = req.user ? req.user.toJSON() : null;
             const success = req.flash('success') ?? null;
+            const error = req.flash('error') ?? null;
 
             const order = await Order.findOne({ _id: id, user: user._id }).lean();
 
@@ -189,6 +190,7 @@ module.exports = {
                     cart,
                     user,
                     success,
+                    error,
                 }
             );
         } catch (error) {
@@ -200,6 +202,8 @@ module.exports = {
         try {
             const cart = req.session.cart;
             const user = req.user ? req.user.toJSON() : null;
+            const success = req.flash('success') ?? null;
+            const error = req.flash('error') ?? null;
 
             const orders = await Order.find({ user: user._id, status: 'completed' }).sort({ createdAt: -1 }).lean();
 
@@ -209,6 +213,8 @@ module.exports = {
                     orders,
                     cart,
                     user,
+                    success,
+                    error,
                 }
             );
         } catch (error) {

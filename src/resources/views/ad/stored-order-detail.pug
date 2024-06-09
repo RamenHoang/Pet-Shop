@@ -1,0 +1,58 @@
+extends ../layouts/main.pug
+
+block content
+    .mt-4.ml-5.mr-5
+        .row
+            .col-lg-12
+                h3 Order ID: ##{order._id}
+            .col-lg-12
+                form(method='POST' action=`/ad/stored-orders/${order._id}`)
+                    .col-lg-12
+                        .form-group
+                            label(for='status') Status
+                            - var checked_open = order.status == 'open'
+                            - var checked_completed = order.status == 'completed'
+                            .form-check
+                                input#open.form-check-input(type='radio' name='status' value='open' checked=checked_open)
+                                label.form-check-label(for='open') Open
+                            .form-check
+                                input#completed.form-check-input(type='radio' name='status' value='completed' checked=checked_completed)
+                                label.form-check-label(for='completed') Completed
+                        .form-group
+                            label(for='email') Email
+                            input#email.form-control(name='email' value=`${order.email}` required='')
+                        .form-group
+                            label(for='phone') Phone
+                            input#phone.form-control(name='phone' value=`${order.phone}` required='')
+                        .form-group
+                            label(for='shipping_address') Shipping address
+                            input#shipping_address.form-control(name='shipping_address' value=`${order.shippingAddress}` required='')
+                        .form-group
+                            label(for='note') Note
+                            input#note.form-control(name='note' value=`${order.note}`)
+                        .form-group
+                            label(for='total') Total price
+                            input#note.form-control(name='total' value=`${order.note}` disabled='')
+                        button.btn.btn-primary.btn-block(type='submit') UPDATE
+        .col-lg-12
+            .card-body.card-product.border
+                table.table.mt-5
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Thumbnail
+                            th(scope='col') Item
+                            th(scope='col') Price
+                            th(scope='col') Quantity
+                    tbody
+                        - var index = 0;
+                        each item in order.items
+                            tr
+                                th(scope='row') #{++index}
+                                td
+                                    a.btn.btn-link(href=`/product/${item.slug}`)
+                                        img.product-thumbnail(src=`${item.thumbnail}`)
+                                td
+                                    a.btn.btn-link(href=`/product/${item.slug}`) #{item.name}
+                                td #{item.priceDisplay}
+                                td #{item.quantity}

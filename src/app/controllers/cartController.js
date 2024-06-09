@@ -9,6 +9,12 @@ module.exports = {
                 cart = {
                     items: {},
                     totalQty: 0,
+                    checkout: {
+                        email: '',
+                        phone: '',
+                        shipping_address: '',
+                        note: '',
+                    }
                 };
             }
 

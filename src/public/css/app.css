@@ -10,7 +10,7 @@ h1 {
 .alert-area {
   position: absolute;
   right: 20px;
-  top: 156px;
+  top: 100px;
   z-index: 9999; }
 
 .product-thumbnail {

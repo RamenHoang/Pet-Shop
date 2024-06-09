@@ -8,34 +8,44 @@ class adController {
     storedProduct(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
         Product.find({})
             .lean()
-            .then((products) => res.render('ad/stored-products', { products, user, cart }))
+            .then((products) => res.render('ad/stored-products', { products, user, cart, success, error}))
             .catch(next);
     }
 
     createproduct(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
         Category.find({})
             .lean()
-            .then((category) => res.render('ad/create', { category, user, cart }))
+            .then((categories) => res.render('ad/create', { categories, user, cart, success, error}))
             .catch(next);
     }
 
     async storeproduct(req, res, next) {
         const product = await Product.create(req.body);
-
         res.redirect('/');
     }
 
     editproduct(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
         Product.findById(req.params.id)
             .lean()
-            .then((products) => {
-                res.render('ad/edit', { products, user, cart });
+            .then((product) => {
+                Category.find({})
+                .lean()
+                .then((categories) => {
+                    res.render('ad/edit-product', { product, categories, user, cart, success, error});
+                })
+                .catch(next);
             })
             .catch(next);
     }
@@ -52,32 +62,13 @@ class adController {
             .catch(next);
     }
 
-    trashproduct(req, res, next) {
-        const user = req.user ? req.user.toJSON() : null;
-        const cart = req.session.cart;
-        Product.findDeleted({})
-            .lean()
-            .then((products) => res.render('ad/trash-products', { products, user, cart }))
-            .catch(next);
-    }
-
-    restoreproduct(req, res, next) {
-        Product.restore({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
-    forceDestroyproduct(req, res, next) {
-        Product.deleteOne({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
     //Category function
     createcategory(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
-        res.render('ad/createcategory', { user, cart });
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
+        res.render('ad/create-category', { user, cart, success, error});
     }
 
     storecategory(req, res, next) {
@@ -89,17 +80,25 @@ class adController {
     }
 
     storedcategory(req, res, next) {
+        const user = req.user ? req.user.toJSON() : null;
+        const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
         Category.find({})
             .lean()
-            .then((category) => res.render('ad/stored-category', { category }))
+            .then((categories) => res.render('ad/stored-category', { user, cart, categories, success, error}))
             .catch(next);
     }
 
     editcategory(req, res, next) {
+        const user = req.user ? req.user.toJSON() : null;
+        const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
         Category.findById(req.params.id)
             .lean()
             .then((category) => {
-                res.render('ad/editcategory', { category });
+                res.render('ad/edit-category', { category, user, cart, success, error});
             })
             .catch(next);
     }
@@ -116,41 +115,28 @@ class adController {
             .catch(next);
     }
 
-    trashcategory(req, res, next) {
-        Category.findDeleted({})
-            .lean()
-            .then((category) => res.render('ad/trash-category', { category }))
-            .catch(next);
-    }
-
-    restorecategory(req, res, next) {
-        Category.restore({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
-    forceDestroycategory(req, res, next) {
-        Category.deleteOne({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
     orders(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
+
         Order.find({})
             .sort({ createdAt: -1 })
             .lean()
-            .then((orders) => res.render('ad/stored-orders', { orders, user, cart }))
+            .then((orders) => res.render('ad/stored-orders', { orders, user, cart, success, error }))
             .catch(next);
     }
 
     orderDetail(req, res, next) {
         const user = req.user ? req.user.toJSON() : null;
         const cart = req.session.cart;
+        const success = req.flash('success') ?? null;
+        const error = req.flash('error') ?? null;
+
         Order.findById(req.params.id)
             .lean()
-            .then((order) => res.render('ad/stored-order-detail', { order, user, cart }))
+            .then((order) => res.render('ad/stored-order-detail', { order, user, cart, success, error }))
             .catch(next);
     }
 
@@ -162,30 +148,6 @@ class adController {
 
     deleteOrder(req, res, next) {
         Order.delete({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
-    trashOrders(req, res, next) {
-        const user = req.user ? req.user.toJSON() : null;
-        const cart = req.session.cart;
-        Order.findDeleted({})
-            .lean()
-            .then((orders) => {
-                orders = orders.filter((order) => order.deleted);
-                res.render('ad/trash-orders', { orders, user, cart })
-            })
-            .catch(next);
-    }
-
-    restoreOrder(req, res, next) {
-        Order.restore({ _id: req.params.id })
-            .then(() => res.redirect('back'))
-            .catch(next);
-    }
-
-    forceDestroyOrder(req, res, next) {
-        Order.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }

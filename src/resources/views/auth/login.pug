@@ -1,0 +1,14 @@
+extends ../layouts/main.pug
+
+block content
+    .row.justify-content-lg-center
+        .col-lg-6
+            h3 LOGIN
+            form(method='POST', action='/auth/login')
+                .form-group
+                    label(for='username') Username
+                    input#username.form-control(name='username', required='')
+                .form-group
+                    label(for='password') Password
+                    input#password.form-control(type='password', name='password', required='')
+                button.btn.btn-primary.btn-block(type='submit') SUBMIT

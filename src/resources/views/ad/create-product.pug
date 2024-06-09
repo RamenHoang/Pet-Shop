@@ -1,0 +1,28 @@
+extends ../layouts/main
+
+block content
+    .mt-4
+        h3 NEW PRODUCT
+        form(method='POST' action='/ad/stored-products/store')
+            .form-group
+                label(for='name') Product&apos;s Name
+                input#name.form-control(name='name')
+            .form-group
+                label(for='price') Product&apos;s Price
+                input#price.form-control(name='price')
+            .form-group
+                label Product&apos;s Category
+                select#category.form-control(name='category' required='')
+                    option -- Select Category --
+                    each category in categories
+                        option #{category.name}
+            .form-group
+                label(for='quantity') Product&apos;s Quantity
+                input#quantity.form-control(name='quantity')
+            .form-group
+                label(for='des') Product&apos;s Description
+                input#des.form-control(name='des')
+            .form-group
+                label(for='thumbnail') Product&apos;s Thumbnail
+                input#thumbnail.form-control(name='thumbnail')
+            button.btn.btn-primary(type='submit') ADD NEW PRODUCT

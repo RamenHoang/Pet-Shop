@@ -1,0 +1,45 @@
+extends ../layouts/main.pug
+
+block content
+    .mt-4.ml-5.mr-5
+        if cart.totalQty
+            .row.justify-content-lg-center
+                ol#progress-bar(style='margin: auto;')
+                    li.step-active CART
+                    li.step-todo CHECKOUT
+                    li.step-todo PAY
+
+        table.table.mt-5
+            thead
+                tr
+                    th(scope='col') #
+                    th(scope='col') Thumbnail
+                    th(scope='col') Item
+                    th(scope='col') Price
+                    th(scope='col') Quantity
+                    th(scope='col') Action
+            tbody
+                - var index = 0;
+                each item in cart.items
+                    tr
+                        th(scope='row') #{++index}
+                        td
+                            a.btn.btn-link(href=`/product/${item.product.slug}`)
+                                img.product-thumbnail(src=`${item.product.thumbnail}`)
+                        td
+                            a.btn.btn-link(href=`/product/${item.product.slug}`) #{item.product.name}
+                        td #{formatCurrency(item.product.price)}
+                        td #{item.quantity}
+                        td
+                            a.btn.btn-primary.mr-2(href=`/cart/increase/${item.product.slug}`) +
+                            a.btn.btn-secondary(href=`/cart/decrease/${item.product.slug}`) -
+                else
+                    tr
+                        td.text-center(colspan='6')
+                            h3 Empty cart!
+                            a.btn.btn-primary(href='/') Continue shopping
+        if cart.totalQty
+            .text-right
+                h4 Total price: #{formatCurrency(cart.totalPrice)}
+                h4 Total quantity: #{cart.totalQty}
+                a.btn.btn-primary(href='/order/checkout') Checkout

@@ -1,0 +1,22 @@
+extends ../layouts/main
+
+block content
+    .mt-4.ml-5.mr-5
+        .row
+            h3 My orders
+            .col-lg-12
+                .card-body.card-product.border
+                    table.table.mt-5
+                        thead
+                            tr
+                                th(scope='col') #
+                                th(scope='col') Total price
+                                th(scope='col') Order at
+                        tbody
+                            each order in orders
+                                tr
+                                    th(scope='row')
+                                        a.btn.btn-link(href=`/order/${order._id}`)
+                                            | #{order._id}
+                                    td #{formatCurrency(order.total)}
+                                    td #{order.createdAt}

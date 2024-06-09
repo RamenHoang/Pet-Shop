@@ -1,0 +1,21 @@
+extends ../layouts/main.pug
+
+block content
+    div(class="mt4")
+        div(class="row")
+            each product in products
+                div(class="col-sm-6 col-lg-3" style="border border-dark")
+                    div(class="card-body card-product border")
+                        div(class="form-group")
+                            a(href=`/product/${product.slug}`)
+                                img(class="card-img-top" src=`${product.thumbnail}` alt=`${product.name}`)
+                        div(class="form-group")
+                            a(href=`/product/${product.slug}`)
+                                h5(class="card-title") #{product.name}
+                            p(class="card-text") Price: #{formatCurrency(product.price)}
+                            p(class="card-text") Stock: #{product.quantity}
+                            if product.quantity
+                            if product.quantity
+                                a(href=`/cart/add_to_cart/${product.slug}` class="btn btn-primary btn-block") Add to cart
+                            else
+                                button(class="btn btn-secondary btn-block" disabled) Out of stock
