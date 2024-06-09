@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -23,7 +24,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: 'mongodb+srv://dinovu285:zxcvbnm1@cluster0.aao9q92.mongodb.net/petshop',
+    mongoUrl: process.env.MONGO_CONNECT_URL,
   }),
 }));
 app.use(flash());

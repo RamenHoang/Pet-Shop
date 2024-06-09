@@ -1,7 +1,9 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
+
 async function connect() {
     try {
-        await mongoose.connect('mongodb+srv://dinovu285:zxcvbnm1@cluster0.aao9q92.mongodb.net/petshop');
+        await mongoose.connect(process.env.MONGO_CONNECT_URL);
     } catch (error) {
         console.error('Connect failure');
         process.exit(1);
